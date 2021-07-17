@@ -1,10 +1,6 @@
-# Very short description of the package
+# Laravel package to make easy search on Eloquent model
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/mawuekom/laravel-searchable.svg?style=flat-square)](https://packagist.org/packages/mawuekom/laravel-searchable)
-[![Total Downloads](https://img.shields.io/packagist/dt/mawuekom/laravel-searchable.svg?style=flat-square)](https://packagist.org/packages/mawuekom/laravel-searchable)
-![GitHub Actions](https://github.com/mawuekom/laravel-searchable/actions/workflows/main.yml/badge.svg)
-
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what PSRs you support to avoid any confusion with users and contributors.
+This package is provided with a service provider and trait to make search on your eloquent model
 
 ## Installation
 
@@ -16,9 +12,95 @@ composer require mawuekom/laravel-searchable
 
 ## Usage
 
+### Laravel
+
+Go to **config/app.php**, and add this in the providers key
+
+
 ```php
-// Usage description here
+'providers' => [
+    ...
+    Mawuekom\MacroSearch\MacroSearchServiceProvider::class,
+    ...
+]
 ```
+
+### Lumen
+
+Go to **bootstrap/app.php**, and add this in the specified key
+
+```php
+// Add provider 
+$app->register(Mawuekom\MacroSearch\MacroSearchServiceProvider::class);
+```
+
+
+### Your model which inherits an eloquent model
+
+```php
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Post extends Model
+{
+    ...
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'title',
+        'content'
+    ];
+
+     ...
+}
+```
+
+### Use it to make search
+
+```php
+
+use App\Models\Post;
+
+Post::whereLike(['title', 'content'], 'Post title');
+
+```
+
+You can also include `Searchable` Trait in your model.
+
+```php
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Mawuekom\LaravelSearchable\Searchable;
+
+class Post extends Model
+{
+    use Searchable;
+
+    ...
+}
+```
+
+Once done, you can make your reseach like this
+
+```php
+
+use App\Models\Post;
+
+Post::search(['title', 'content'], 'Post title') ->get();
+
+```
+
+### Once done, enjoy it.
 
 ### Testing
 
@@ -34,19 +116,12 @@ Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recen
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
-### Security
+### Security and Report bug
 
-If you discover any security related issues, please email seddorephraim7@gmail.com instead of using the issue tracker.
+If you discover any security related issues, please email seddorephraim7@gmail.com or contact me on Twitter [@ephraimseddor](https://twitter.com/ephraimseddor) instead of using the issue tracker.
 
-## Credits
-
--   [Ephraïm Seddor](https://github.com/mawuekom)
--   [All Contributors](../../contributors)
 
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
-## Laravel Package Boilerplate
-
-This package was generated using the [Laravel Package Boilerplate](https://laravelpackageboilerplate.com).
