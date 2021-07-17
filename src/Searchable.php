@@ -15,7 +15,7 @@ trait Searchable
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function search($query, array $attributes, string $searchTerm): Builder
+    public function scopeSearch($query, array $attributes, string $searchTerm): Builder
     {
         return $query ->whereLike($attributes, $searchTerm);
     }
