@@ -20,7 +20,7 @@ Go to **config/app.php**, and add this in the providers key
 ```php
 'providers' => [
     ...
-    Mawuekom\MacroSearch\MacroSearchServiceProvider::class,
+    Mawuekom\LaravelSearchable\LaravelSearchableServiceProvider::class,
     ...
 ]
 ```
@@ -31,7 +31,7 @@ Go to **bootstrap/app.php**, and add this in the specified key
 
 ```php
 // Add provider 
-$app->register(Mawuekom\MacroSearch\MacroSearchServiceProvider::class);
+$app->register(Mawuekom\LaravelSearchable\LaravelSearchableServiceProvider::class);
 ```
 
 
